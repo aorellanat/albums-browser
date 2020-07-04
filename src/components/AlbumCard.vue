@@ -1,15 +1,9 @@
 <template>
-  <v-card class="mb-2">
-    <v-row no-gutters justify="end">
-      <v-col cols="6" sm="6" md="6">
-        <v-img :src="urlImageCover" class="image"></v-img>
-      </v-col>
-      <v-col cols="6" sm="6" md="6">
-      <v-card-title class="mt-1 ml-5">Album: {{album}}</v-card-title>
-      <v-card-subtitle class="mt-1 ml-5">{{artist}}</v-card-subtitle>
-      <v-card-text class="ml-5">Price: {{price}}</v-card-text>
-      </v-col>
-    </v-row>
+  <v-card class="mb-2" height="100%">
+    <v-img :src="urlImageCover" height="300"></v-img>
+    <v-card-title class="mt-1 ml-5">{{album}}</v-card-title>
+    <v-card-subtitle class="mt-1 ml-5">{{artist}}</v-card-subtitle>
+    <v-card-text class="ml-5">Price: {{price}} $</v-card-text>
   </v-card>
 </template>
 
