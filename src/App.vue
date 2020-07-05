@@ -1,17 +1,17 @@
 <template>
   <v-app>
-    <Home />
+    <AlbumsBrowser />
   </v-app>
 </template>
 
 <script>
-import Home from '@/views/Home';
+import AlbumsBrowser from '@/views/AlbumsBrowser';
 
 export default {
   name: 'App',
 
   components: {
-    Home
+    AlbumsBrowser
   },
 
   data: () => ({

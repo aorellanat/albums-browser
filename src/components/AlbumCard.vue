@@ -1,9 +1,9 @@
 <template>
   <v-card class="mb-2" height="100%">
-    <v-img :src="urlImageCover" height="300"></v-img>
-    <v-card-title class="mt-1">{{album}}</v-card-title>
-    <v-card-subtitle class="mt-1">{{artist}}</v-card-subtitle>
-    <v-card-text>Price: {{price}} $</v-card-text>
+    <v-img class="album-img" :src="urlImageCover" height="300"></v-img>
+    <v-card-title class="mt-1 album-name">{{album}}</v-card-title>
+    <v-card-subtitle class="mt-1 album-artist">{{artist}}</v-card-subtitle>
+    <v-card-text class="album-price">Price: {{price}} USD</v-card-text>
   </v-card>
 </template>
 
@@ -29,10 +29,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.image {
-  height: 100%;
-  width: 40vw;
-}
-</style>
