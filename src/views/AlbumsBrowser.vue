@@ -20,7 +20,7 @@
     <v-snackbar v-model="snackbar" :timeout="timeout">
       {{ text }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+        <v-btn color="pink darken-1" text v-bind="attrs" @click="snackbar = false">Close</v-btn>
       </template>
     </v-snackbar>
   </v-container>
@@ -38,7 +38,6 @@ export default {
   },
   data() {
     return {
-      artistName: '',
       albums: [],
       results: [],
       currentPage: 0,
@@ -46,7 +45,7 @@ export default {
       cardsPerPage: 20,
       disablePagination: true,
       snackbar: false,
-      timeout: 10,
+      timeout: 900,
       text: 'No results found.'
     }
   },
@@ -60,25 +59,22 @@ export default {
   },
   methods: {
     searchAlbums: function(artistName) {
-      this.artistName = artistName;
-      let artist = this.formatNameToSearch(artistName);
-
-      axios.get(`https://itunes.apple.com/search?term=${artist}&entity=album`)
+      axios.get(`https://itunes.apple.com/search?term=${artistName}&entity=album`)
       .then(result => {
         this.results = result.data.results;
 
         if (this.results.length > 0) {
           this.setUpPagination();
         } else {
+          this.results = [];
+          this.albums = [];
+          this.disablePagination = true;
           this.showSnackbar();
         }
       })
       .catch(error => {
         console.log(error);
       });
-    },
-    formatNameToSearch: function(name) {
-      return name.replace(' ','+').toLowerCase();
     },
     setUpPagination: function() {
       this.disablePagination = false;
