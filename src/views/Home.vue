@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <h1 id="title" class="text-center my-5">iTunes Artists</h1>
-    <p id="instruction-text">Please enter artist name to search information about his albums:</p>
+    <p id="instruction-text">Please enter artist's name to find information about their albums:</p>
     <v-row justify="center">
       <v-col cols="8" sm="6" md="6">
         <v-form ref="form">
@@ -19,6 +19,17 @@
         <AlbumCard :album="album.collectionName" :artist="album.artistName" :price="album.collectionPrice" :urlImageCover="album.artworkUrl100"/>
       </v-col>
     </v-row>
+    <div v-if="!disablePagination" class="text-center mb-5">
+      <v-pagination
+        v-model="currentPage"
+        color="pink lighten-1"
+        :length="pages"
+        prev-icon="mdi-menu-left"
+        next-icon="mdi-menu-right"
+      >
+      </v-pagination>
+      <v-btn text @click="showAllAlbums()">See all ></v-btn>
+    </div>
   </v-container>
 </template>
 
@@ -34,8 +45,20 @@ export default {
     return {
       artistName: '',
       albums: [],
+      results: [],
       rules: [value => value !== '' || 'You must insert an artist name.'],
-      resultCount: 0
+      currentPage: 0,
+      pages: 0,
+      cardsPerPage: 20,
+      disablePagination: true
+    }
+  },
+  watch: {
+    currentPage: function() {
+      let start = (this.currentPage - 1) * this.cardsPerPage;
+      let end = this.currentPage * this.cardsPerPage;
+      this.albums = this.results.slice(start, end);
+      this.$vuetify.goTo(0);
     }
   },
   methods: {
@@ -45,9 +68,8 @@ export default {
 
         axios.get(`https://itunes.apple.com/search?term=${artist}&entity=album`)
         .then(result => {
-          console.log(result.data.results);
-          this.albums = result.data.results;
-          this.resultCount = result.data.resultCount;
+          this.results = result.data.results;
+          this.setUpPagination();
         })
         .catch(error => {
           console.log(error);
@@ -55,10 +77,19 @@ export default {
       }
     },
     formatArtistName: function() {
-      return this.artistName.replace(' ','-').toLowerCase();
+      return this.artistName.replace(' ','+').toLowerCase();
     },
     validateField: function() {
       return this.$refs.form.validate();
+    },
+    setUpPagination: function() {
+      this.disablePagination = false;
+      this.currentPage = 1;
+      this.pages = Math.ceil(this.results.length / this.cardsPerPage);
+    },
+    showAllAlbums: function() {
+      this.disablePagination = true;
+      this.albums = this.results;
     }
   }
 }

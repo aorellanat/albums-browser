@@ -1,9 +1,9 @@
 <template>
   <v-card class="mb-2" height="100%">
     <v-img :src="urlImageCover" height="300"></v-img>
-    <v-card-title class="mt-1 ml-5">{{album}}</v-card-title>
-    <v-card-subtitle class="mt-1 ml-5">{{artist}}</v-card-subtitle>
-    <v-card-text class="ml-5">Price: {{price}} $</v-card-text>
+    <v-card-title class="mt-1">{{album}}</v-card-title>
+    <v-card-subtitle class="mt-1">{{artist}}</v-card-subtitle>
+    <v-card-text>Price: {{price}} $</v-card-text>
   </v-card>
 </template>
 
